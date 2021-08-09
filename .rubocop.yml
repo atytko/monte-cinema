@@ -10,5 +10,7 @@ AllCops:
     - 'script/*'
     - 'vendor/**/*'
     - 'node_modules/**/*'
-    - 'db/migrations/*'
+    - 'db/migrate/*'
     - 'db/schema.rb'
+    - 'config/**/*'
+
