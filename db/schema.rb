@@ -33,20 +33,13 @@ ActiveRecord::Schema.define(version: 2021_08_09_192344) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "reservation_statuses", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "reservations", force: :cascade do |t|
     t.bigint "screening_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.bigint "ticket_desk_id"
-    t.bigint "reservation_status_id", null: false
+    t.string "status", default: "pending", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["reservation_status_id"], name: "index_reservations_on_reservation_status_id"
     t.index ["screening_id"], name: "index_reservations_on_screening_id"
     t.index ["ticket_desk_id"], name: "index_reservations_on_ticket_desk_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
