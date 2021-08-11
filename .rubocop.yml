@@ -13,4 +13,5 @@ AllCops:
     - 'db/migrate/*'
     - 'db/schema.rb'
     - 'config/**/*'
+    - 'spec/rails_helper.rb'
 
