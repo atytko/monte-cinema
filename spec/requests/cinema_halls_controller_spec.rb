@@ -7,10 +7,10 @@ RSpec.describe CinemaHallsController, type: :request do
   let(:user) { create(:user, user_role: role) }
 
   describe '#index' do
-    subject { get :index }
+    subject { get '/cinema_halls' }
 
     context 'when the user is logged in' do
-      before { sign_in user }
+      sign_in :user
 
       it 'return valid http status' do
         subject

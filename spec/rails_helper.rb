@@ -34,7 +34,6 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
-  config.include Devise::Test::IntegrationHelpers, type: :request
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -72,4 +71,11 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
+
+require "support/auth_helper"
+
+RSpec.configure do |config|
+  config.include AuthHelpers::Includables, type: :request
+  config.extend AuthHelpers::Extensions, type: :request
+end
 end
