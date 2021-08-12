@@ -21,7 +21,7 @@ gem 'puma', '~> 5.0'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem 'devise', '~> 4.8.0'
-gem 'devise_token_auth', '~> 1.1.5'
+gem 'devise_token_auth', '~> 1.2.0'
 gem 'dotenv-rails', '~> 2.7.6'
 gem 'omniauth', '~> 2.0.4'
 gem 'sentry-rails', '~> 4.6.4'
@@ -36,12 +36,13 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails', '~> 6.2.0'
+  gem 'rspec-rails', '~> 5.0.1'
   gem 'rubocop', '~> 1.18'
   gem 'rubocop-performance', '~> 1.11.4'
   gem 'rubocop-rails', '~> 2.11.3'
   gem 'rubocop-rspec', '~> 2.4.0'
-  gem 'rspec-rails', '~> 5.0.1'
-  gem 'factory_bot_rails', '~> 6.2.0'
+  gem 'shoulda-matchers', '~> 5.0.0'
 end
 
 group :development do
