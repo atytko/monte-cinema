@@ -46,8 +46,6 @@ RSpec.describe CinemaHallsController, type: :request do
       post '/cinema_halls', params: { cinema_hall: { name: 'hall_1', row_number: 10, row_total_seats: 20 } }
     end
 
-    let!(:cinema_hall) { create(:cinema_hall) }
-
     context 'when the user is logged in' do
       sign_in :user
 
