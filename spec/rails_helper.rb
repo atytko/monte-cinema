@@ -2,6 +2,7 @@
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require "support/auth_helper"
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
@@ -33,6 +34,8 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+  config.include AuthHelpers::Includables, type: :request
+  config.extend AuthHelpers::Extensions, type: :request
   config.include FactoryBot::Syntax::Methods
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -71,11 +74,4 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
-
-require "support/auth_helper"
-
-RSpec.configure do |config|
-  config.include AuthHelpers::Includables, type: :request
-  config.extend AuthHelpers::Extensions, type: :request
-end
 end
