@@ -12,7 +12,7 @@ module AuthHelpers
   module Includables
     HTTP_HELPERS_TO_OVERRIDE =
       %i[get post patch put delete].freeze
-    # Override helpers for Rails 5.0
+    # Override helpers
     # see http://api.rubyonrails.org/v5.0/classes/ActionDispatch/Integration/RequestHelpers.html
     HTTP_HELPERS_TO_OVERRIDE.each do |helper|
       define_method(helper) do |path, **args|
@@ -30,4 +30,9 @@ module AuthHelpers
       args[:headers].merge!(auth_helpers_auth_token)
     end
   end
+end
+
+RSpec.configure do |config|
+  config.include AuthHelpers::Includables, type: :request
+  config.extend AuthHelpers::Extensions, type: :request
 end
