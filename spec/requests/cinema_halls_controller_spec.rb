@@ -36,6 +36,12 @@ RSpec.describe CinemaHallsController, type: :request do
         get_cinema_hall
         expect(response).to have_http_status(:ok)
       end
+
+      it 'works and returns a valid response' do
+        get_cinema_hall
+        expect(JSON.parse(response.body)).to eq({ 'name' => cinema_hall.name, 'row_number' => cinema_hall.row_number,
+                                                  'row_total_seats' => cinema_hall.row_total_seats })
+      end
     end
 
     include_examples 'unauthorized'

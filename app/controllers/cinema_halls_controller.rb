@@ -12,7 +12,7 @@ class CinemaHallsController < ApplicationController
   def show
     cinema_hall = CinemaHall.find(params[:id])
 
-    render json: cinema_hall
+    render json: cinema_hall.to_json(only: %w[name row_number row_total_seats])
   end
 
   def create
