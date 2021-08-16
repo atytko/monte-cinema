@@ -28,6 +28,23 @@ RSpec.describe CinemaHallsController, type: :request do
     subject(:get_cinema_hall) { get "/cinema_halls/#{cinema_hall.id}" }
 
     let(:cinema_hall) { create(:cinema_hall) }
+    let(:expected_response) do
+      {
+        'data' => {
+          'id' => cinema_hall.id.to_s,
+          'type' => 'cinema_hall',
+          'attributes' => {
+            'name' => cinema_hall.name, 'row_number' => cinema_hall.row_number,
+            'row_total_seats' => cinema_hall.row_total_seats
+          },
+          'relationships' => {
+            'screenings' => {
+              'data' => []
+            }
+          }
+        }
+      }
+    end
 
     context 'when the user is logged in' do
       sign_in :user
@@ -39,8 +56,7 @@ RSpec.describe CinemaHallsController, type: :request do
 
       it 'works and returns a valid response' do
         get_cinema_hall
-        expect(JSON.parse(response.body)).to eq({ 'name' => cinema_hall.name, 'row_number' => cinema_hall.row_number,
-                                                  'row_total_seats' => cinema_hall.row_total_seats })
+        expect(JSON.parse(response.body)).to eq(expected_response)
       end
     end
 
