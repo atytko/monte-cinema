@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth'
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+    registrations: 'override/registrations',
+    sessions: 'override/sessions'
+  }
   resources :cinema_halls, only: [:index, :show, :update, :create, :destroy]
 end

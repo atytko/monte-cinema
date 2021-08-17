@@ -7,5 +7,6 @@ FactoryBot.define do
     last_name { 'Doe' }
     password { 'password' }
     password_confirmation { 'password' }
+    user_role 
   end
 end
