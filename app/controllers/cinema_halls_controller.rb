@@ -2,7 +2,6 @@
 
 class CinemaHallsController < ApplicationController
   include JSONAPI::Fetching
-  before_action :authenticate_user!
 
   def index
     cinema_halls = CinemaHall.all

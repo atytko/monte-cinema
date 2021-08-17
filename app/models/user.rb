@@ -9,4 +9,12 @@ class User < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :users_ticket_desks, dependent: :destroy
   belongs_to :user_role
+  validates :last_name, presence: true
+  validates :first_name, presence: true
+
+  before_validation :assign_default_role, on: :create
+
+  def assign_default_role
+    self.user_role = UserRole.default
+  end
 end
