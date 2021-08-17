@@ -7,13 +7,13 @@ class CinemaHallsController < ApplicationController
   def index
     cinema_halls = CinemaHall.all
 
-    render jsonapi: cinema_halls
+    render jsonapi: cinema_halls, except: blacklisted_attributes
   end
 
   def show
     cinema_hall = CinemaHall.find(params[:id])
 
-    render jsonapi: cinema_hall, only: whitelisted_attributes
+    render jsonapi: cinema_hall, except: blacklisted_attributes
   end
 
   def create
@@ -46,7 +46,7 @@ class CinemaHallsController < ApplicationController
     params.require(:cinema_hall).permit(:name, :row_number, :row_total_seats)
   end
 
-  def whitelisted_attributes
-    %w[name row_number row_total_seats]
+  def blacklisted_attributes
+    %w[created_at updated_at]
   end
 end

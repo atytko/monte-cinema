@@ -34,7 +34,8 @@ RSpec.describe CinemaHallsController, type: :request do
           'id' => cinema_hall.id.to_s,
           'type' => 'cinema_hall',
           'attributes' => {
-            'name' => cinema_hall.name, 'row_number' => cinema_hall.row_number,
+            'name' => cinema_hall.name,
+            'row_number' => cinema_hall.row_number,
             'row_total_seats' => cinema_hall.row_total_seats
           },
           'relationships' => {
