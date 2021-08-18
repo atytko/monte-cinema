@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'shared_examples_for_cinema_halls'
+require 'shared_examples_for_controllers'
 
 RSpec.describe CinemaHallsController, type: :request do
   let(:role) { create(:user_role) }
