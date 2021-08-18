@@ -44,6 +44,7 @@ group :development, :test do
   gem 'rubocop-rails', '~> 2.11.3'
   gem 'rubocop-rspec', '~> 2.4.0'
   gem 'shoulda-matchers', '~> 5.0.0'
+  gem 'simplecov', '~> 0.21.2'
 end
 
 group :development do
