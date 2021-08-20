@@ -18,6 +18,7 @@ class MoviesController < ApplicationController
 
   def create
     movie = Movie.new(movie_params)
+    authorize movie
     if movie.save
       render jsonapi: movie, status: :created, location: movie
     else
@@ -27,6 +28,7 @@ class MoviesController < ApplicationController
 
   def update
     movie = Movie.find(params[:id])
+    authorize movie
     if movie.update(movie_params)
       render jsonapi: movie
     else
@@ -36,6 +38,7 @@ class MoviesController < ApplicationController
 
   def destroy
     movie = Movie.find(params[:id])
+    authorize movie
     movie.destroy
     head :no_content
   end

@@ -15,6 +15,18 @@ class User < ApplicationRecord
   before_validation :assign_default_role, on: :create
 
   def assign_default_role
-    self.user_role = UserRole.default
+    self.user_role ||= UserRole.default
+  end
+
+  def employee?
+    user_role.name == 'employee'
+  end
+
+  def manager?
+    user_role.name == 'manager'
+  end
+
+  def client?
+    user_role.name == 'client'
   end
 end

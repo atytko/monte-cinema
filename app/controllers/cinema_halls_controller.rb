@@ -4,6 +4,7 @@ class CinemaHallsController < ApplicationController
   include JSONAPI::Fetching
 
   def index
+    authorize CinemaHall
     cinema_halls = CinemaHall.all
 
     render jsonapi: cinema_halls, except: blacklisted_attributes
@@ -11,12 +12,14 @@ class CinemaHallsController < ApplicationController
 
   def show
     cinema_hall = CinemaHall.find(params[:id])
+    authorize cinema_hall
 
     render jsonapi: cinema_hall, except: blacklisted_attributes
   end
 
   def create
     cinema_hall = CinemaHall.new(cinema_hall_params)
+    authorize cinema_hall
     if cinema_hall.save
       render jsonapi: cinema_hall, status: :created, location: cinema_hall
     else
@@ -26,6 +29,7 @@ class CinemaHallsController < ApplicationController
 
   def update
     cinema_hall = CinemaHall.find(params[:id])
+    authorize cinema_hall
     if cinema_hall.update(cinema_hall_params)
       render jsonapi: cinema_hall
     else
@@ -35,6 +39,7 @@ class CinemaHallsController < ApplicationController
 
   def destroy
     cinema_hall = CinemaHall.find(params[:id])
+    authorize cinema_hall
     cinema_hall.destroy
     head :no_content
   end

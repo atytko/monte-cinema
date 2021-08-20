@@ -25,6 +25,7 @@ gem 'devise_token_auth', '~> 1.2.0'
 gem 'dotenv-rails', '~> 2.7.6'
 gem 'jsonapi.rb', '~> 1.7.0'
 gem 'omniauth', '~> 2.0.4'
+gem 'pundit', '~> 2.1.1'
 gem 'sentry-rails', '~> 4.6.4'
 gem 'sentry-ruby', '~> 4.6.4'
 
