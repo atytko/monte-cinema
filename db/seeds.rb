@@ -89,13 +89,13 @@ Rails.logger.info 'Ticket Desks created.'
 
 Rails.logger.info 'Creating Screenings...'
 Screening.create!([
-                    { cinema_hall: CinemaHall.all.sample, screening_time: DateTime.now + 1.hour,
+                    { cinema_hall: CinemaHall.all.sample, screening_time: Time.current + 1.hour,
                       movie: Movie.all.sample },
-                    { cinema_hall: CinemaHall.all.sample, screening_time: DateTime.now + 2.hour,
+                    { cinema_hall: CinemaHall.all.sample, screening_time: Time.current + 2.hour,
                       movie: Movie.all.sample },
-                    { cinema_hall: CinemaHall.all.sample, screening_time: DateTime.now + 3.hour,
+                    { cinema_hall: CinemaHall.all.sample, screening_time: Time.current + 3.hour,
                       movie: Movie.all.sample },
-                    { cinema_hall: CinemaHall.all.sample, screening_time: DateTime.now + 4.hour,
+                    { cinema_hall: CinemaHall.all.sample, screening_time: Time.current + 4.hour,
                       movie: Movie.all.sample }
                   ])
 Rails.logger.info 'Screenings created.'

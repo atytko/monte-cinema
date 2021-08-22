@@ -32,7 +32,5 @@ RSpec.describe SeatValidator do
 
       it { is_expected.to eq(true) }
     end
-
-    it {}
   end
 end
