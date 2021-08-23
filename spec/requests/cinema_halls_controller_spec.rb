@@ -22,6 +22,15 @@ RSpec.describe CinemaHallsController, type: :request do
     end
 
     include_examples 'unauthorized'
+
+    context 'when user is not employee or manager' do
+      sign_in :user
+
+      it 'returns 403 http status' do
+        get_cinema_halls
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
   end
 
   describe '#show' do
