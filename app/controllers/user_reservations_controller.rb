@@ -16,11 +16,15 @@ class UserReservationsController < ApplicationController
   end
 
   def create
-    reservation = current_user.reservations.new(reservation_params)
-    if reservation.save
-      render jsonapi: reservation, status: :created
+    if already_booked?
+      render json: { error: 'One or more seats is taken' }, status: :unprocessable_entity
     else
-      render json: reservation.errors, status: :unprocessable_entity
+      reservation = current_user.reservations.new(reservation_params)
+      if reservation.save
+        render jsonapi: reservation, status: :created
+      else
+        render json: reservation.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -46,5 +50,11 @@ class UserReservationsController < ApplicationController
 
   def blacklisted_attributes
     %w[created_at updated_at]
+  end
+
+  def already_booked?
+    reservation_params[:seats_reservations_attributes].any? do |seat|
+      SeatValidator.seat_is_taken?(seat[:row], seat[:seat_number], reservation_params[:screening_id])
+    end
   end
 end

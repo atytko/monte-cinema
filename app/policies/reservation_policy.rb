@@ -9,18 +9,24 @@ class ReservationPolicy < ApplicationPolicy
   end
 
   def index?
-    user.manager? || user.employee?
+    access?
   end
 
   def show?
-    user.manager? || user.employee?
+    access?
   end
 
   def create?
-    user.manager? || user.employee?
+    access?
   end
 
   def update?
+    access?
+  end
+
+  private
+
+  def access?
     user.manager? || user.employee?
   end
 end

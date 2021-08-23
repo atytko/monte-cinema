@@ -9,14 +9,20 @@ class MoviePolicy < ApplicationPolicy
   end
 
   def create?
-    user.manager? || user.employee?
+    access?
   end
 
   def update?
-    user.manager? || user.employee?
+    access?
   end
 
   def destroy?
+    access?
+  end
+
+  private
+
+  def access?
     user.manager? || user.employee?
   end
 end
