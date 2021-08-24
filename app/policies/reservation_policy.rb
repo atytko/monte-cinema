@@ -1,32 +1,29 @@
 # frozen_string_literal: true
 
 class ReservationPolicy < ApplicationPolicy
-  attr_reader :user, :reservation
-
-  def initialize(user, _movie)
-    @user = user
-    @reservation = reservation
-  end
-
-  def index?
-    access?
+  class Scope < Scope
+    def resolve
+      if user.manager? || user.employee?
+        scope.all
+      else
+        scope.where(user: user)
+      end
+    end
   end
 
   def show?
-    access?
+    if user.employee? || user.manager?
+      true
+    else
+      user.id == record.user_id
+    end
   end
 
   def create?
-    access?
+    true
   end
 
   def update?
-    access?
-  end
-
-  private
-
-  def access?
-    user.manager? || user.employee?
+    true
   end
 end

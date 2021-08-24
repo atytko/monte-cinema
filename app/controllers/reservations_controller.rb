@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-class UserReservationsController < ApplicationController
+class ReservationsController < ApplicationController
   include JSONAPI::Fetching
 
   def index
-    reservations = current_user.reservations
+    reservations = policy_scope(Reservation).where(screening: params[:screening_id])
 
     render jsonapi: reservations, except: blacklisted_attributes
   end
 
   def show
-    reservation = current_user.reservations.find(params[:id])
+    reservation = policy_scope(Reservation).find(params[:id])
 
     render jsonapi: reservation, except: blacklisted_attributes
   end
@@ -20,6 +20,7 @@ class UserReservationsController < ApplicationController
       render json: { error: 'One or more seats is taken' }, status: :unprocessable_entity
     else
       reservation = current_user.reservations.new(reservation_params)
+      authorize reservation
       if reservation.save
         render jsonapi: reservation, status: :created
       else
@@ -30,6 +31,7 @@ class UserReservationsController < ApplicationController
 
   def update
     reservation = current_user.reservations.find(params[:id])
+    authorize reservation
     if reservation.update(update_reservation_params)
       render jsonapi: reservation
     else
