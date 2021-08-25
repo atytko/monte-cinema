@@ -63,7 +63,6 @@ RSpec.describe MoviesController, type: :request do
 
     context 'when the user is logged in' do
       let(:role) { create(:user_role, name: 'employee') }
-      let(:role) { create(:user_role, name: 'manager') }
 
       sign_in :user
 
@@ -105,7 +104,6 @@ RSpec.describe MoviesController, type: :request do
 
     context 'when the user is logged in' do
       let(:role) { create(:user_role, name: 'employee') }
-      let(:role) { create(:user_role, name: 'manager') }
 
       sign_in :user
 
@@ -125,7 +123,6 @@ RSpec.describe MoviesController, type: :request do
 
     context 'when the user is logged in' do
       let(:role) { create(:user_role, name: 'employee') }
-      let(:role) { create(:user_role, name: 'manager') }
 
       sign_in :user
 
