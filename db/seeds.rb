@@ -109,11 +109,12 @@ Reservation.create!([
 Rails.logger.info 'Reservations created.'
 
 Rails.logger.info 'Creating Seats Reservations...'
-letters = ('A'..'J').to_a
 Reservation.all.each do |reservation|
-  rand(1..3).times do |_number|
-    SeatsReservation.create!([row: letters[rand(1..reservation.screening.cinema_hall.row_number) - 1],
-                              seat_number: rand(1..reservation.screening.cinema_hall.row_total_seats),
+  rows = ('A'..'J').to_a.shuffle
+  seats = (1..reservation.screening.cinema_hall.row_total_seats).to_a.shuffle
+  rand(1..3).times do |number|
+    SeatsReservation.create!([row: rows[number],
+                              seat_number: seats[number],
                               cinema_hall: reservation.screening.cinema_hall,
                               reservation: reservation])
   end

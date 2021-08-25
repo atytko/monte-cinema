@@ -10,17 +10,18 @@ class ReservationsController < ApplicationController
   end
 
   def show
-    reservation = policy_scope(Reservation).find(params[:id])
+    reservation = Reservation.find(params[:id])
+    authorize reservation
 
     render jsonapi: reservation, except: blacklisted_attributes
   end
 
   def create
+    authorize Reservation
     if already_booked?
       render json: { error: 'One or more seats is taken' }, status: :unprocessable_entity
     else
       reservation = current_user.reservations.new(reservation_params)
-      authorize reservation
       if reservation.save
         render jsonapi: reservation, status: :created
       else
@@ -30,7 +31,7 @@ class ReservationsController < ApplicationController
   end
 
   def update
-    reservation = current_user.reservations.find(params[:id])
+    reservation = Reservation.find(params[:id])
     authorize reservation
     if reservation.update(update_reservation_params)
       render jsonapi: reservation

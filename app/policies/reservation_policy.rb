@@ -12,11 +12,7 @@ class ReservationPolicy < ApplicationPolicy
   end
 
   def show?
-    if user.employee? || user.manager?
-      true
-    else
-      user.id == record.user_id
-    end
+    admin_or_owner?
   end
 
   def create?
@@ -24,6 +20,16 @@ class ReservationPolicy < ApplicationPolicy
   end
 
   def update?
-    true
+    admin_or_owner?
+  end
+
+  private
+
+  def admin_or_owner?
+    if user.employee? || user.manager?
+      true
+    else
+      user.id == record.user_id
+    end
   end
 end
