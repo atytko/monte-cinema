@@ -62,6 +62,8 @@ RSpec.describe MoviesController, type: :request do
     end
 
     context 'when the user is logged in' do
+      let(:role) { create(:user_role, name: 'employee') }
+
       sign_in :user
 
       it 'returns 201 http status' do
@@ -80,6 +82,15 @@ RSpec.describe MoviesController, type: :request do
     end
 
     include_examples 'unauthorized'
+
+    context 'when user is not employee or manager' do
+      sign_in :user
+
+      it 'returns 403 http status' do
+        create_movie
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
   end
 
   describe '#update' do
@@ -92,6 +103,8 @@ RSpec.describe MoviesController, type: :request do
     let(:movie) { create(:movie) }
 
     context 'when the user is logged in' do
+      let(:role) { create(:user_role, name: 'employee') }
+
       sign_in :user
 
       it 'returns 200 http status' do
@@ -109,6 +122,8 @@ RSpec.describe MoviesController, type: :request do
     let!(:movie) { create(:movie) }
 
     context 'when the user is logged in' do
+      let(:role) { create(:user_role, name: 'employee') }
+
       sign_in :user
 
       it 'returns 204 http status' do

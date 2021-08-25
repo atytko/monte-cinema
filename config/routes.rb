@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   }
   resources :cinema_halls, only: [:index, :show, :update, :create, :destroy]
   resources :movies, only: [:index, :show, :update, :create, :destroy]
+  resources :reservations, only: [:index, :show, :update, :create]
 end
