@@ -28,6 +28,8 @@ gem 'omniauth', '~> 2.0.4'
 gem 'pundit', '~> 2.1.1'
 gem 'sentry-rails', '~> 4.6.4'
 gem 'sentry-ruby', '~> 4.6.4'
+gem 'sidekiq', '~> 6.2.2'
+gem 'sidekiq-cron', '~> 1.2.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
