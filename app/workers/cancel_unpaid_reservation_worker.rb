@@ -5,7 +5,7 @@ class CancelUnpaidReservationWorker
 
   def perform
     Reservation.where(status: 'pending')
-               .where('screening_time < ?', DateTime.now + 30.minutes)
+               .where('screening_time < ?', Time.current + 30.minutes)
                .joins(:screening)
                .update_all(status: 'cancelled')
   end
