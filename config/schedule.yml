@@ -1,4 +1,4 @@
 cancel_unpaid_reservation_job:
-   cron: "* * * * *"
+   cron: "*/10 * * * *"
    class: "CancelUnpaidReservationWorker"
    queue: default
