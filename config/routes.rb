@@ -6,7 +6,12 @@ Rails.application.routes.draw do
     registrations: 'override/registrations',
     sessions: 'override/sessions'
   }
-  resources :cinema_halls, only: [:index, :show, :update, :create, :destroy]
-  resources :movies, only: [:index, :show, :update, :create, :destroy]
-  resources :reservations, only: [:index, :show, :update, :create]
+  resources :cinema_halls, only: %i[index show update create destroy]
+  resources :movies, only: %i[index show update create destroy]
+  resources :reservations, only: %i[index show update create] do
+    collection do
+      post '/online', to: 'reservations#create'
+      post '/offline', to: 'reservations#create_offline'
+    end
+  end
 end
