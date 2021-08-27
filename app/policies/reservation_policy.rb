@@ -23,6 +23,10 @@ class ReservationPolicy < ApplicationPolicy
     admin_or_owner?
   end
 
+  def create_offline?
+    user.manager? || user.employee?
+  end
+
   private
 
   def admin_or_owner?
