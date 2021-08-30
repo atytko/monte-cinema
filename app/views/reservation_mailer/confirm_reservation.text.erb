@@ -2,12 +2,14 @@ Welcome to Monte Cinema!
 Your reservation has been confirmed.
 You can find reservation details below:
 
-Reservation ID: <%= @tickets.first.reservation_id %>
-<% @tickets.zip(@seats).each do |ticket, seat| %>
-  Ticket ID: <%= ticket.id %>
-  Price: <%= ticket.ticket_type.price %>€
-  Seat: <%= seat.seat_number %><%= seat.row %>
-<%end%>
+ Screening Time: <%= @reservation.screening.screening_time %>
+ Movie: <%= @reservation.screening.movie.title %>
+ Reservation ID: <%= @reservation.tickets.first.reservation_id %>
+      <% @reservation.tickets.zip(@reservation.seats_reservations).each do |ticket, seat| %>
+          Ticket ID:<%= ticket.id %>, 
+          Price:<%= ticket.ticket_type.price %> €,
+          Seat:<%= seat.seat_number %><%= seat.row %>
+      <%end%>
 
 Please remember to arrive at least 30 minutes before the screening and pay for the ticket in one of our Ticket Desks. Otherwise your reservation will be cancelled.
 
