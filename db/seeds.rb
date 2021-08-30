@@ -120,3 +120,12 @@ Reservation.all.each do |reservation|
   end
 end
 Rails.logger.info 'Seats Reservations created.'
+
+Rails.logger.info 'Creating Tickets...'
+ticket_type = TicketType.order('RANDOM()').first
+reservation = Reservation.order('RANDOM()').first
+Ticket.create!([
+                 reservation_id: reservation.id,
+                 ticket_type_id: ticket_type.id
+               ])
+Rails.logger.info 'Tickets created.'

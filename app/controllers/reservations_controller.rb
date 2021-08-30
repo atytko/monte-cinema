@@ -24,6 +24,7 @@ class ReservationsController < ApplicationController
       reservation = current_user.reservations.new(reservation_params)
       if reservation.save
         render jsonapi: reservation, status: :created
+        ReservationMailer.confirm_reservation(current_user.email, reservation).deliver_now
       else
         render json: reservation.errors, status: :unprocessable_entity
       end
