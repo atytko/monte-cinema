@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to Monte Cinema 🍿</h1>
+    <p>
+      Your reservation has been confirmed.
+      You can find reservation details below:
+      <br><br>
+
+      <strong>Screening Time:</strong> <%= @reservation.screening.screening_time %><br><br>
+      <strong>Movie:</strong> <%= @reservation.screening.movie.title %><br><br>
+      <strong>Reservation ID:</strong> <%= @reservation.tickets.first.reservation_id %><br>
+      <% @reservation.tickets.zip(@reservation.seats_reservations).each do |ticket, seat| %>
+        <p> 
+          <strong>Ticket ID:</strong> <%= ticket.id %>, 
+          <strong>Price:</strong> <%= ticket.ticket_type.price %> &euro;,
+          <strong>Seat:</strong> <%= seat.seat_number %><%= seat.row %>
+        </p>
+      <%end%>
+    <p>Please remember to arrive at least 30 minutes before the screening and pay for the ticket in one of our Ticket Desks. Otherwise your reservation will be cancelled.</p>
+    <p>Monte Cinema</p>
+    </p>
+  </body>
+</html>
+
