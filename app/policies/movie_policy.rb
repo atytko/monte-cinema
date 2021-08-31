@@ -4,6 +4,7 @@ class MoviePolicy < ApplicationPolicy
   attr_reader :user, :movie
 
   def initialize(user, movie)
+    super
     @user = user
     @movie = movie
   end

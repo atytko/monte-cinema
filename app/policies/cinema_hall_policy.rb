@@ -4,6 +4,7 @@ class CinemaHallPolicy < ApplicationPolicy
   attr_reader :user, :cinema_hall
 
   def initialize(user, cinema_hall)
+    super
     @user = user
     @cinema_hall = cinema_hall
   end

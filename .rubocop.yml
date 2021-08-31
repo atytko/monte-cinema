@@ -15,3 +15,17 @@ AllCops:
     - 'config/**/*'
     - 'spec/rails_helper.rb'
 
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
