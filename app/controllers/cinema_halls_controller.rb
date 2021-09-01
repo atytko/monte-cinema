@@ -21,7 +21,7 @@ class CinemaHallsController < ApplicationController
     cinema_hall = CinemaHall.new(cinema_hall_params)
     authorize cinema_hall
     if cinema_hall.save
-      render jsonapi: cinema_hall, status: :created, location: cinema_hall
+      render jsonapi: cinema_hall, status: :created
     else
       render jsonapi: cinema_hall.errors, status: :unprocessable_entity
     end

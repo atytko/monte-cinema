@@ -20,7 +20,7 @@ class MoviesController < ApplicationController
     movie = Movie.new(movie_params)
     authorize movie
     if movie.save
-      render jsonapi: movie, status: :created, location: movie
+      render jsonapi: movie, status: :created
     else
       render jsonapi: movie.errors, status: :unprocessable_entity
     end
