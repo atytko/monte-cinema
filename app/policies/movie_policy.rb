@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class MoviePolicy < ApplicationPolicy
-  attr_reader :user, :movie
+  attr_reader :user, :record
 
-  def initialize(user, movie)
+  def initialize(user, record)
     super
     @user = user
-    @movie = movie
+    @record = record
   end
 
   def create?

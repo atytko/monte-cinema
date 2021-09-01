@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class CinemaHallPolicy < ApplicationPolicy
-  attr_reader :user, :cinema_hall
+  attr_reader :user, :record
 
-  def initialize(user, cinema_hall)
+  def initialize(user, record)
     super
     @user = user
-    @cinema_hall = cinema_hall
+    @record = record
   end
 
   def index?
