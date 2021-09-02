@@ -5,19 +5,15 @@ class MoviesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[show index]
 
   def index
-    movies = Movie.all
-
-    render jsonapi: movies, except: blacklisted_attributes
+    render jsonapi: Movies::UseCases::FetchAll.new.call, except: blacklisted_attributes
   end
 
   def show
-    movie = Movie.find(params[:id])
-
-    render jsonapi: movie, except: blacklisted_attributes
+    render jsonapi: Movies::UseCases::FetchOne.new.call(id: params[:id]), except: blacklisted_attributes
   end
 
   def create
-    movie = Movie.new(movie_params)
+    movie = Movies::UseCases::Create.new.call(params: movie_params)
     authorize movie
     if movie.save
       render jsonapi: movie, status: :created
@@ -27,7 +23,7 @@ class MoviesController < ApplicationController
   end
 
   def update
-    movie = Movie.find(params[:id])
+    movie = Movies::UseCases::Update.new.call(id: params[:id], params: movie_params)
     authorize movie
     if movie.update(movie_params)
       render jsonapi: movie
@@ -37,7 +33,7 @@ class MoviesController < ApplicationController
   end
 
   def destroy
-    movie = Movie.find(params[:id])
+    movie = Movies::UseCases::Delete.new.call(id: params[:id])
     authorize movie
     movie.destroy
     head :no_content
