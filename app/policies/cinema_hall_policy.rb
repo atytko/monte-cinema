@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class CinemaHallPolicy < ApplicationPolicy
-  attr_reader :user, :cinema_hall
-
-  def initialize(user, cinema_hall)
-    @user = user
-    @cinema_hall = cinema_hall
-  end
-
   def index?
     access?
   end

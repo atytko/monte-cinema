@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   }
   resources :cinema_halls, only: %i[index show update create destroy]
   resources :movies, only: %i[index show update create destroy]
-  resources :reservations, only: %i[index show update create] do
+  resources :reservations, only: %i[index show update] do
     collection do
       post '/online', to: 'reservations#create'
       post '/offline', to: 'reservations#create_offline'

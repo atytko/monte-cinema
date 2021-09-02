@@ -3,6 +3,8 @@
 class SeatsReservation < ApplicationRecord
   belongs_to :reservation
   belongs_to :cinema_hall
+  validates :row, presence: true
+  validates :seat_number, presence: true
 
   before_validation :set_cinema_hall, on: :create
 
