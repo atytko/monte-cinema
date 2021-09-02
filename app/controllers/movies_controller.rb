@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
   def create
     movie = Movies::UseCases::Create.new.call(params: movie_params)
     authorize movie
-    if movie.save
+    if movie.valid?
       render jsonapi: movie, status: :created
     else
       render jsonapi: movie.errors, status: :unprocessable_entity
@@ -25,7 +25,7 @@ class MoviesController < ApplicationController
   def update
     movie = Movies::UseCases::Update.new.call(id: params[:id], params: movie_params)
     authorize movie
-    if movie.update(movie_params)
+    if movie.valid?
       render jsonapi: movie
     else
       render jsonapi: movie.errors, status: :unprocessable_entity
