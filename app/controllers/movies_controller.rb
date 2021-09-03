@@ -13,8 +13,8 @@ class MoviesController < ApplicationController
   end
 
   def create
+    authorize Movie
     movie = Movies::UseCases::Create.new.call(params: movie_params)
-    authorize movie
     if movie.valid?
       render jsonapi: movie, status: :created
     else
@@ -23,8 +23,8 @@ class MoviesController < ApplicationController
   end
 
   def update
+    authorize Movie
     movie = Movies::UseCases::Update.new.call(id: params[:id], params: movie_params)
-    authorize movie
     if movie.valid?
       render jsonapi: movie
     else
@@ -33,9 +33,8 @@ class MoviesController < ApplicationController
   end
 
   def destroy
-    movie = Movies::UseCases::Delete.new.call(id: params[:id])
-    authorize movie
-    movie.destroy
+    authorize Movie
+    Movies::UseCases::Delete.new.call(id: params[:id])
     head :no_content
   end
 

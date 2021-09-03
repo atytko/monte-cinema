@@ -15,8 +15,8 @@ class CinemaHallsController < ApplicationController
   end
 
   def create
+    authorize CinemaHall
     cinema_hall = CinemaHalls::UseCases::Create.new.call(params: cinema_hall_params)
-    authorize cinema_hall
     if cinema_hall.valid?
       render jsonapi: cinema_hall, status: :created
     else
@@ -25,8 +25,8 @@ class CinemaHallsController < ApplicationController
   end
 
   def update
+    authorize CinemaHall
     cinema_hall = CinemaHalls::UseCases::Update.new.call(id: params[:id], params: cinema_hall_params)
-    authorize cinema_hall
     if cinema_hall.valid?
       render jsonapi: cinema_hall
     else
@@ -35,9 +35,8 @@ class CinemaHallsController < ApplicationController
   end
 
   def destroy
-    cinema_hall = CinemaHalls::UseCases::Delete.new.call(id: params[:id])
-    authorize cinema_hall
-    cinema_hall.destroy
+    authorize CinemaHall
+    CinemaHalls::UseCases::Delete.new.call(id: params[:id])
     head :no_content
   end
 
