@@ -23,12 +23,13 @@ class MoviesController < ApplicationController
   end
 
   def update
-    authorize Movie
-    movie = Movies::UseCases::Update.new.call(id: params[:id], params: movie_params)
-    if movie.valid?
-      render jsonapi: movie
+    movie = Movies::UseCases::FetchOne.new.call(id: params[:id])
+    authorize movie
+    updated_movie = Movies::UseCases::Update.new.call(id: params[:id], params: movie_params)
+    if updated_movie.valid?
+      render jsonapi: updated_movie
     else
-      render jsonapi: movie.errors, status: :unprocessable_entity
+      render jsonapi: updated_movie.errors, status: :unprocessable_entity
     end
   end
 

@@ -25,12 +25,13 @@ class CinemaHallsController < ApplicationController
   end
 
   def update
-    authorize CinemaHall
-    cinema_hall = CinemaHalls::UseCases::Update.new.call(id: params[:id], params: cinema_hall_params)
-    if cinema_hall.valid?
-      render jsonapi: cinema_hall
+    cinema_hall = CinemaHalls::UseCases::FetchOne.new.call(id: params[:id])
+    authorize cinema_hall
+    updated_cinema_hall = CinemaHalls::UseCases::Update.new.call(id: params[:id], params: cinema_hall_params)
+    if updated_cinema_hall.valid?
+      render jsonapi: updated_cinema_hall
     else
-      render jsonapi: cinema_hall.errors, status: :unprocessable_entity
+      render jsonapi: updated_cinema_hall.errors, status: :unprocessable_entity
     end
   end
 
