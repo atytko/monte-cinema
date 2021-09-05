@@ -5,22 +5,19 @@ class CinemaHallsController < ApplicationController
 
   def index
     authorize CinemaHall
-    cinema_halls = CinemaHall.all
-
-    render jsonapi: cinema_halls, except: blacklisted_attributes
+    render jsonapi: CinemaHalls::UseCases::FetchAll.new.call, except: blacklisted_attributes
   end
 
   def show
-    cinema_hall = CinemaHall.find(params[:id])
+    cinema_hall = CinemaHalls::UseCases::FetchOne.new.call(id: params[:id])
     authorize cinema_hall
-
     render jsonapi: cinema_hall, except: blacklisted_attributes
   end
 
   def create
-    cinema_hall = CinemaHall.new(cinema_hall_params)
-    authorize cinema_hall
-    if cinema_hall.save
+    authorize CinemaHall
+    cinema_hall = CinemaHalls::UseCases::Create.new.call(params: cinema_hall_params)
+    if cinema_hall.valid?
       render jsonapi: cinema_hall, status: :created
     else
       render jsonapi: cinema_hall.errors, status: :unprocessable_entity
@@ -28,19 +25,19 @@ class CinemaHallsController < ApplicationController
   end
 
   def update
-    cinema_hall = CinemaHall.find(params[:id])
+    cinema_hall = CinemaHalls::UseCases::FetchOne.new.call(id: params[:id])
     authorize cinema_hall
-    if cinema_hall.update(cinema_hall_params)
-      render jsonapi: cinema_hall
+    updated_cinema_hall = CinemaHalls::UseCases::Update.new.call(id: params[:id], params: cinema_hall_params)
+    if updated_cinema_hall.valid?
+      render jsonapi: updated_cinema_hall
     else
-      render jsonapi: cinema_hall.errors, status: :unprocessable_entity
+      render jsonapi: updated_cinema_hall.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    cinema_hall = CinemaHall.find(params[:id])
-    authorize cinema_hall
-    cinema_hall.destroy
+    authorize CinemaHall
+    CinemaHalls::UseCases::Delete.new.call(id: params[:id])
     head :no_content
   end
 

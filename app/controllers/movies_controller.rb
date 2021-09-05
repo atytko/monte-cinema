@@ -5,21 +5,17 @@ class MoviesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[show index]
 
   def index
-    movies = Movie.all
-
-    render jsonapi: movies, except: blacklisted_attributes
+    render jsonapi: Movies::UseCases::FetchAll.new.call, except: blacklisted_attributes
   end
 
   def show
-    movie = Movie.find(params[:id])
-
-    render jsonapi: movie, except: blacklisted_attributes
+    render jsonapi: Movies::UseCases::FetchOne.new.call(id: params[:id]), except: blacklisted_attributes
   end
 
   def create
-    movie = Movie.new(movie_params)
-    authorize movie
-    if movie.save
+    authorize Movie
+    movie = Movies::UseCases::Create.new.call(params: movie_params)
+    if movie.valid?
       render jsonapi: movie, status: :created
     else
       render jsonapi: movie.errors, status: :unprocessable_entity
@@ -27,19 +23,19 @@ class MoviesController < ApplicationController
   end
 
   def update
-    movie = Movie.find(params[:id])
+    movie = Movies::UseCases::FetchOne.new.call(id: params[:id])
     authorize movie
-    if movie.update(movie_params)
-      render jsonapi: movie
+    updated_movie = Movies::UseCases::Update.new.call(id: params[:id], params: movie_params)
+    if updated_movie.valid?
+      render jsonapi: updated_movie
     else
-      render jsonapi: movie.errors, status: :unprocessable_entity
+      render jsonapi: updated_movie.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    movie = Movie.find(params[:id])
-    authorize movie
-    movie.destroy
+    authorize Movie
+    Movies::UseCases::Delete.new.call(id: params[:id])
     head :no_content
   end
 
