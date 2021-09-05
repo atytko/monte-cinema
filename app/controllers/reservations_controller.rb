@@ -4,15 +4,14 @@ class ReservationsController < ApplicationController
   include JSONAPI::Fetching
 
   def index
-    reservations = policy_scope(Reservation).where(screening: params[:screening_id])
-
+    policy_scope(Reservation)
+    reservations = Reservations::UseCases::FetchAll.new.call.where(screening: params[:screening_id])
     render jsonapi: reservations, except: blacklisted_attributes
   end
 
   def show
-    reservation = Reservation.find(params[:id])
+    reservation = Reservations::UseCases::FetchOne.new.call(id: params[:id])
     authorize reservation
-
     render jsonapi: reservation, except: blacklisted_attributes
   end
 
@@ -21,8 +20,8 @@ class ReservationsController < ApplicationController
     if already_booked?
       render json: { error: 'One or more seats is taken' }, status: :unprocessable_entity
     else
-      reservation = current_user.reservations.new(reservation_params)
-      if reservation.save
+      reservation = Reservations::UseCases::Create.new.call(params: reservation_params.merge(user: current_user))
+      if reservation.valid?
         render jsonapi: reservation, status: :created
         ReservationMailer.confirm_reservation(current_user.email, reservation).deliver_now
       else
@@ -36,8 +35,8 @@ class ReservationsController < ApplicationController
     if already_booked?
       render json: { error: 'One or more seats is taken' }, status: :unprocessable_entity
     else
-      reservation = Reservation.new(offline_reservation_params)
-      if reservation.save
+      reservation = Reservations::UseCases::CreateOffline.new.call(params: offline_reservation_params)
+      if reservation.valid?
         render jsonapi: reservation, status: :created
       else
         render json: reservation.errors, status: :unprocessable_entity
@@ -46,12 +45,13 @@ class ReservationsController < ApplicationController
   end
 
   def update
-    reservation = Reservation.find(params[:id])
+    reservation = Reservations::UseCases::FetchOne.new.call(id: params[:id])
     authorize reservation
-    if reservation.update(update_reservation_params)
-      render jsonapi: reservation
+    updated_reservation = Reservations::UseCases::Update.new.call(id: params[:id], params: update_reservation_params)
+    if updated_reservation.valid?
+      render jsonapi: updated_reservation
     else
-      render jsonapi: reservation.errors, status: :unprocessable_entity
+      render jsonapi: updated_reservation.errors, status: :unprocessable_entity
     end
   end
 
