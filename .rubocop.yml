@@ -20,6 +20,7 @@ Metrics/MethodLength:
 
 Metrics/BlockLength:
   ExcludedMethods: ['describe', 'context']
+  Max: 40
 
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
@@ -28,4 +29,10 @@ RSpec/MultipleExpectations:
   Enabled: false
 
 RSpec/LetSetup:
+  Enabled: false
+
+RSpec/ScatteredSetup:
+  Enabled: false
+
+RSpec/EmptyExampleGroup:
   Enabled: false

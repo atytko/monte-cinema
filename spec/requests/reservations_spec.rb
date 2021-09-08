@@ -1,12 +1,11 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'reservations', type: :request do
-
   path '/reservations/online' do
-
     post('create reservation') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -14,16 +13,15 @@ RSpec.describe 'reservations', type: :request do
             }
           }
         end
+
         run_test!
       end
     end
   end
 
   path '/reservations/offline' do
-
     post('create_offline reservation') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -31,16 +29,15 @@ RSpec.describe 'reservations', type: :request do
             }
           }
         end
+
         run_test!
       end
     end
   end
 
   path '/reservations' do
-
     get('list reservations') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -48,13 +45,13 @@ RSpec.describe 'reservations', type: :request do
             }
           }
         end
+
         run_test!
       end
     end
   end
 
   path '/reservations/{id}' do
-    # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
     get('show reservation') do
@@ -68,6 +65,7 @@ RSpec.describe 'reservations', type: :request do
             }
           }
         end
+
         run_test!
       end
     end
@@ -83,6 +81,7 @@ RSpec.describe 'reservations', type: :request do
             }
           }
         end
+
         run_test!
       end
     end
@@ -98,6 +97,7 @@ RSpec.describe 'reservations', type: :request do
             }
           }
         end
+
         run_test!
       end
     end
