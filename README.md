@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple app to buy cinema tickets. 🍿
 
-Things you may want to cover:
+https://my-monte-cinema.herokuapp.com/
 
-* Ruby version
+## Technologies
 
-* System dependencies
+    - Ruby 3.0.2
+    - Rails 6.1.4
+    - PostgreSQL 13.3
+    - Sidekiq 6.2.2
 
-* Configuration
 
-* Database creation
+## Install & Run
 
-* Database initialization
+    $ git clone https://github.com/atytko/monte-cinema.git - clone repository
 
-* How to run the test suite
+    $ bundle install - install gems
 
-* Services (job queues, cache servers, search engines, etc.)
+    $ rails db:setup - create database with seeds
+    
+    $ rails s - run server
 
-* Deployment instructions
+##  Run tests
 
-* ...
+    $ rspec
+
+
