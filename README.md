@@ -14,13 +14,23 @@ https://my-monte-cinema.herokuapp.com/
 
 ## Install & Run
 
-    $ git clone https://github.com/atytko/monte-cinema.git - clone repository
+##### Clone repository
 
-    $ bundle install - install gems
+    $ git clone https://github.com/atytko/monte-cinema.git
+
+##### Install gems
+
+    $ bundle install
+    
+##### Create database with seeds
 
     $ rails db:setup - create database with seeds
     
-    $ rails s - run server
+##### Run server
+    
+    $ rails s
+    
+    The app is now ready to use at: http://localhost:3000
 
 ##  Run tests
 
