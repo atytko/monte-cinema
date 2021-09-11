@@ -24,13 +24,13 @@ https://my-monte-cinema.herokuapp.com/
     
 ##### Create database with seeds
 
-    $ rails db:setup - create database with seeds
+    $ rails db:setup
     
 ##### Run server
     
     $ rails s
     
-    The app is now ready to use at: http://localhost:3000
+ The app is now ready to use at: http://localhost:3000
 
 ##  Run tests
 
